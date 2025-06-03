@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Full app blue gradient background */
+html,
+body,
+#__next {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #3b82f6 50%, #60a5fa 100%);
+  /* dark blue (#0f172a) → blue (#3b82f6) → light blue (#60a5fa) */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Whole dashboard background - deep blue gradient */
+.dashboard-bg {
+  background: linear-gradient(135deg, #0f172a, #1e3a8a, #3b82f6);
+  min-height: 100vh;
+  color: white; /* default text color */
+  overflow: hidden; /* prevent scroll outside main content */
+}
+
+/* Main content area - white bg with padding and shadow */
+.main-content-bg {
+  background: -webkit-linear-gradient(to top, #004e92, #000428);
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  color: #1e293b; /* dark slate for text */
+  min-height: calc(100vh - 4rem); /* full height minus header */
+  overflow-y: auto; /* scroll inside main content */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.main-content-bg::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* For WebKit */
+}
+
+/* Glassy gradient sidebar */
+.sidebar-glass {
+  /* background: linear-gradient(to bottom, #0f172a, #1e40af, #3b82f6); */
+  /* background-opacity: 0.6;  */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 30px rgba(59, 130, 246, 0.3);
+}
+
+/* Glassy gradient header */
+.header-glass {
+  /* background: linear-gradient(to right, #0f172a, #1e40af, #3b82f6); */
+  /* background-opacity: 0.6; */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 30px rgba(59, 130, 246, 0.3);
+}
+
+/* Button hover for logout */
+.logout-button {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 0.375rem; /* rounded */
+  padding: 0.25rem 0.75rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Active sidebar tab */
+.sidebar-tab-active {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* Sidebar tab hover */
+.sidebar-tab-hover:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Scrollbar styling for main content (optional) */
+.main-content-bg::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content-bg::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.main-content-bg::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.main-content-bg::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Remove input number spinner (up/down arrows) */
+input[type="number"].no-spin::-webkit-inner-spin-button,
+input[type="number"].no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].no-spin {
+  -moz-appearance: textfield;
+}
+
+.react-datepicker-popper-zindex {
+  z-index: 99999 !important;
+}

@@ -1,0 +1,504 @@
+/* 
+Lizar Business HTML Template 
+
+*/
+/************ TABLE OF CONTENTS ***************
+
+1. Fonts
+2. Reset
+3. Global
+4. Main Header / Two / Three
+5. Main Slider / Two / Three
+6. About One
+7. Services One / Two / Three / Four
+8. Project One / Two / Three
+9. Testimonial One / Two / Three
+10. Partners One
+11. News One / Two
+12. CTA One
+13. Main Footer
+14. Clients One / Two / Three
+15. Counter One
+16. News Three
+17. InTouch One
+18. Page Title
+19. Banner One
+20. Work One
+21. Pricing One
+22. Team One
+23. Services Widgets
+24. Services Detail
+25. Our Projects
+26. Projects Detail
+27. Projects Widgets
+28. Our Blog
+29. Blog Widgets
+30. Comment Form
+31. Comment Box
+32. Contact Info
+33. Contact Form
+34. Map
+
+**********************************************/
+
+
+
+/*** 
+====================================================================
+	Css Files
+====================================================================
+***/
+@import url('01-global.css');
+@import url('module-css/header.css');
+@import url('module-css/footer.css');
+@import url('module-css/feature.css');
+@import url('module-css/solutions.css');
+@import url('module-css/pricing.css');
+@import url('module-css/brand.css');
+@import url('module-css/collaboration.css');
+@import url('module-css/testimonial.css');
+@import url('module-css/faq.css');
+@import url('module-css/free-trail.css');
+@import url('module-css/copywriting-tool.css');
+@import url('module-css/how-tool-work.css');
+@import url('module-css/counter.css');
+@import url('module-css/case.css');
+@import url('module-css/banner.css');
+@import url('module-css/gallery.css');
+@import url('module-css/image-generator-tools.css');
+@import url('module-css/art-and-image-tool.css');
+@import url('module-css/amazing-art-tool.css');
+@import url('module-css/create-something.css');
+@import url('module-css/page-title.css');
+@import url('module-css/about.css');
+@import url('module-css/video.css');
+@import url('module-css/team.css');
+@import url('module-css/ai-product.css');
+@import url('module-css/login.css');
+@import url('module-css/reset-password.css');
+@import url('module-css/contact.css');
+@import url('module-css/blog.css');
+@import url('module-css/career.css');
+@import url('module-css/404.css');
+
+
+
+
+@import url('02-bootstrap-select.min.css');
+@import url('03-owl.css');
+@import url('04-animate.css');
+@import url('05-rtl.css');
+@import url('06-custom-animate.css');
+@import url('07-dark-body.css');
+@import url('08-font-awesome.css');
+@import url('09-icomoon.css');
+@import url('10-jarallax.css');
+@import url('11-preloader.css');
+@import url('12-swiper.min.css');
+@import url('13-odometer-theme-default.css');
+@import url('14-jquery-ui.css');
+@import url('15-magnific-popup.css');
+@import url('../fonts/reey-font/stylesheet.css');
+
+
+
+/*** 
+====================================================================
+	
+====================================================================
+***/
+
+
+/* Sticy Header */
+.want-sticky-header .main-header.fixed-header {
+	position: relative !important;
+	display: none;
+}
+
+
+/* Box Layout */
+.box-layout .page-wrapper {
+	max-width: 1390px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 15px;
+	overflow: hidden;
+	background-color: var(--thm-body-bg);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.10);
+}
+
+.box-layout:before {
+	position: fixed;
+	content: '';
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	display: block;
+	background: url(../images/partners/thm-pattern-2.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.box-layout .slider-one_social-icons {
+	display: none;
+}
+
+.box-layout .main-header-two__inner {
+	margin: 0 0px;
+}
+
+/* Collaboration One Section */
+.collaboration-one {
+    padding: 40px 0;
+}
+
+.collaboration-one__inner {
+    padding: 20px 0;
+}
+
+.collaboration-one__title-box {
+    margin-bottom: 15px;
+}
+
+.collaboration-one__title {
+    margin-bottom: 10px;
+}
+
+.collaboration-one__icon-box {
+    margin-top: 15px;
+}
+
+/* Ads Types Section Styles */
+.ads-types-section {
+    padding: 40px 0;
+    position: relative;
+}
+
+.ads-types-section .section-title__text {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.ads-types-tabs {
+    background: transparent;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.ads-tabs-list {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    padding: 0;
+    list-style: none;
+}
+
+.ads-tabs-list li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ads-tabs-list li.active {
+    background: var(--thm-primary);
+    color: #ffffff;
+}
+
+.ads-tabs-list li span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.ads-tabs-list li img {
+    height: 20px;
+    width: auto;
+}
+
+.ads-tab {
+    display: none;
+}
+
+.ads-tab.active {
+    display: block;
+}
+
+.ads-tab__title {
+    font-size: 22px;
+    color: #ffffff;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.ads-tab__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ads-tab__list li {
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.ads-tab__list li b {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.ads-tab__image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    display: block;
+}
+
+@media (max-width: 991px) {
+    .ads-tab__image {
+        max-width: 70%;
+        margin: 15px auto 0;
+    }
+}
+
+/* Floating Contact Button */
+.floating-contact-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #0088cc;
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+    z-index: 99;
+    transition: all 0.3s ease;
+}
+
+.floating-contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+    color: #ffffff;
+    background: #0077b3;
+}
+
+.floating-contact-btn__icon {
+    width: 24px;
+    height: 24px;
+}
+
+.floating-contact-btn__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.floating-contact-btn__text {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+@media (max-width: 767px) {
+    .floating-contact-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+    }
+    
+    .floating-contact-btn__text {
+        font-size: 14px;
+    }
+}
+
+/* Base Responsive Styles */
+html {
+    font-size: 16px;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile Menu Base Styles */
+.mobile-menu {
+    position: fixed;
+    right: -350px;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    z-index: 999;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.menu-backdrop {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background: rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Navigation Toggler */
+.mobile-nav-toggler {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-nav-toggler span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #333;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Responsive Container */
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* Twinkling Stars Background */
+.twinkling-stars-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.twinkling-stars-bg .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: twinkle 2s infinite ease-in-out;
+}
+/* Different delays and sizes for variety */
+.twinkling-stars-bg .star:nth-child(2n) { width: 3px; height: 3px; opacity: 0.5; animation-delay: 0.5s; }
+.twinkling-stars-bg .star:nth-child(3n) { width: 1.5px; height: 1.5px; opacity: 0.8; animation-delay: 1s; }
+.twinkling-stars-bg .star:nth-child(4n) { width: 2.5px; height: 2.5px; opacity: 0.6; animation-delay: 1.5s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.2; }
+}
+
+/* Make sure the feature section is relative for absolute stars */
+.feature-one { position: relative; z-index: 1; }
+
+/* Mobile Login/Signup in Mobile Menu */
+.mobile-login-signup {
+  list-style: none;
+  padding: 20px 0 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.mobile-login-signup li a {
+  display: block;
+  color: #fff;
+  background: #4f46e5;
+  border-radius: 6px;
+  padding: 12px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.mobile-login-signup li a:hover {
+  background: #6366f1;
+  color: #fff;
+}
+@media (min-width: 992px) {
+  .mobile-login-signup { display: none; }
+}
+
+/* Center footer logo and address */
+.footer-widget__about {
+  text-align: center;
+}
+.footer-widget__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.footer-widget__about-text {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
