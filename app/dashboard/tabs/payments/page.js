@@ -90,7 +90,7 @@ export default function PaymentsPage() {
   }, []);
 
   // Build query params object ONLY with active filters + status=TRANSFERRED always
-  const buildQueryParams = () => {
+  const buildQueryParams = useCallback(() => {
     const params = {
       status: "TRANSFERRED",
       page: pagination.page,
@@ -100,14 +100,20 @@ export default function PaymentsPage() {
     if (networkFilter.trim() !== "") params.network = networkFilter.trim();
     if (walletFilter.trim() !== "") params.wallet = walletFilter.trim();
 
-    // Only include both dates if both set
     if (startDate && endDate) {
       params.startDate = formatDateForAPI(startDate);
       params.endDate = formatDateForAPI(endDate);
     }
 
     return params;
-  };
+  }, [
+    networkFilter,
+    walletFilter,
+    startDate,
+    endDate,
+    pagination.page,
+    pagination.limit,
+  ]);
 
   // Fetch withdrawals with filters and pagination
   const fetchWithdrawals = useCallback(async () => {
@@ -120,17 +126,12 @@ export default function PaymentsPage() {
       const withResp = await authHandlers.getUserWithdrawals(params);
 
       setWithdrawalData(withResp.data?.withdrawalData || null);
-      // console.log("Withdrawal data:", withResp.data?.withdrawalData);
 
       const docs = withResp.data?.withdrawals?.docs || [];
-      console.log("Withdrawals docs:", docs);
-
       setFilteredWithdrawals(docs);
 
-      // Only update pagination fields EXCEPT page here to avoid loop
       setPagination((prev) => ({
         ...prev,
-        // page: prev.page, // don't overwrite page here
         limit: withResp.data.withdrawals?.limit || prev.limit,
         totalPages: withResp.data.withdrawals?.totalPages || prev.totalPages,
         totalDocs: withResp.data.withdrawals?.totalDocs || prev.totalDocs,
@@ -143,14 +144,7 @@ export default function PaymentsPage() {
     } finally {
       setLoadingWithdrawals(false);
     }
-  }, [
-    networkFilter,
-    walletFilter,
-    startDate,
-    endDate,
-    pagination.page,
-    pagination.limit,
-  ]);
+  }, [buildQueryParams]);
 
   // On mount, load support data and networks list
   useEffect(() => {

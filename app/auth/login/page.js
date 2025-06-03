@@ -311,7 +311,7 @@ export default function LoginPage() {
             </p>
 
             <p className="text-center">
-              Don't have an account?{" "}
+              Don&apos;t have an account?
               <Link href="/auth/signup" className="link-button">
                 Sign Up
               </Link>

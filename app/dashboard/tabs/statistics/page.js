@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Filter, X } from "lucide-react";
 import { authHandlers } from "@/services/api-handlers";
 import toast from "react-hot-toast";
@@ -88,77 +88,68 @@ export default function StatisticsPage() {
   };
 
   // Fetch stats from API
-  const fetchStats = async (
-    page = 1,
-    websiteId = matchedWebsiteId || websiteIdFromQuery
-  ) => {
-    setLoading(true);
-    try {
-      const startDateParam = formatDateForAPI(startDate);
-      const endDateParam = formatDateForAPI(endDate);
+  const fetchStats = useCallback(
+    async (page = 1, websiteId = matchedWebsiteId || websiteIdFromQuery) => {
+      setLoading(true);
+      try {
+        const startDateParam = formatDateForAPI(startDate);
+        const endDateParam = formatDateForAPI(endDate);
 
-      console.log(
-        "startDateParam:",
-        startDateParam,
-        "endDateParam:",
-        endDateParam
-      );
+        const response = await authHandlers.getUserStats({
+          page,
+          limit: pagination.limit,
+          startDate: startDateParam,
+          endDate: endDateParam,
+          website_id: websiteId,
+        });
 
-      const response = await authHandlers.getUserStats({
-        page,
-        limit: pagination.limit,
-        startDate: startDateParam,
-        endDate: endDateParam,
-        website_id: websiteId,
-      });
+        if (response?.status === 200) {
+          const userstats = response.data.userstats;
 
-      if (response?.status === 200) {
-        const userstats = response.data.userstats;
-
-        console.log("userstats:", userstats.docs);
-
-        setStatisticsData(userstats.docs || []);
-        setPagination((prev) => ({
-          totalDocs: userstats.totalDocs || 0,
-          limit: userstats.limit || 10,
-          totalPages: userstats.totalPages || 1,
-          page: userstats.page || 1,
-          hasPrevPage: userstats.hasPrevPage || false,
-          hasNextPage: userstats.hasNextPage || false,
-          prevPage: userstats.prevPage || null,
-          nextPage: userstats.nextPage || null,
-        }));
-      } else {
+          setStatisticsData(userstats.docs || []);
+          setPagination((prev) => ({
+            totalDocs: userstats.totalDocs || 0,
+            limit: userstats.limit || 10,
+            totalPages: userstats.totalPages || 1,
+            page: userstats.page || 1,
+            hasPrevPage: userstats.hasPrevPage || false,
+            hasNextPage: userstats.hasNextPage || false,
+            prevPage: userstats.prevPage || null,
+            nextPage: userstats.nextPage || null,
+          }));
+        } else {
+          setStatisticsData([]);
+          setPagination((prev) => ({
+            ...prev,
+            totalDocs: 0,
+            totalPages: 1,
+            page: 1,
+            hasPrevPage: false,
+            hasNextPage: false,
+            prevPage: null,
+            nextPage: null,
+          }));
+        }
+      } catch (error) {
+        console.error("Failed to fetch user stats:", error);
+        toast.error("Failed to load statistics.");
         setStatisticsData([]);
-        setPagination((prev) => ({
-          ...prev,
+        setPagination({
           totalDocs: 0,
+          limit: 10,
           totalPages: 1,
           page: 1,
           hasPrevPage: false,
           hasNextPage: false,
           prevPage: null,
           nextPage: null,
-        }));
+        });
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Failed to fetch user stats:", error);
-      toast.error("Failed to load statistics.");
-      setStatisticsData([]);
-      setPagination({
-        totalDocs: 0,
-        limit: 10,
-        totalPages: 1,
-        page: 1,
-        hasPrevPage: false,
-        hasNextPage: false,
-        prevPage: null,
-        nextPage: null,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [matchedWebsiteId, websiteIdFromQuery, pagination.limit, startDate, endDate]
+  );
 
   // Find matchedWebsiteId from filterWebsiteName input & existing data
   useEffect(() => {
@@ -179,7 +170,7 @@ export default function StatisticsPage() {
   // Fetch stats on page, limit, matchedWebsiteId changes
   useEffect(() => {
     fetchStats(pagination.page);
-  }, [pagination.page, pagination.limit, matchedWebsiteId, websiteIdFromQuery]);
+  }, [fetchStats, pagination.page]);
 
   // Fetch stats when both dates are set or cleared, reset page to 1
   useEffect(() => {
@@ -187,7 +178,7 @@ export default function StatisticsPage() {
       setPagination((prev) => ({ ...prev, page: 1 }));
       fetchStats(1);
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, fetchStats]);
 
   // Clear all filters including websiteName & dates
   const clearFilters = () => {

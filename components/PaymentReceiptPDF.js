@@ -73,8 +73,7 @@ const PaymentReceiptPDF = ({ data }) => (
   <Document>
     <Page style={styles.page}>
       <View style={styles.header}>
-        {/* Put your logo path here */}
-        <Image style={styles.logo} src="/images/logo_nav_white.png" />
+        <Image style={styles.logo} src="/images/logo_nav_white.png" alt="" />
       </View>
 
       <View style={styles.section}>

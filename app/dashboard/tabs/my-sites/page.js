@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Plus, Search, Filter, X, BarChart2 } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,17 +8,17 @@ import { authHandlers } from "@/services/api-handlers";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
-import { useAuth } from "@/context/auth-context"; // Adjust import to your auth context
+import { useAuth } from "@/context/auth-context";
 import VerifyEmailCard from "@/components/verify-email";
 
 export default function MySitesPage() {
   const router = useRouter();
-  const { user, refreshUserData } = useAuth(); // grab user & refreshUserData from auth context
+  const { user, refreshUserData } = useAuth();
 
-  // === Your existing states ===
+  // States
   const [sites, setSites] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all"); // 'all', 'true', 'false'
+  const [statusFilter, setStatusFilter] = useState("all");
   const [date, setDate] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [isAddSiteModalOpen, setIsAddSiteModalOpen] = useState(false);
@@ -37,9 +37,9 @@ export default function MySitesPage() {
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  // === Email Verification states ===
-  const userEmail = user?.userdata?.Email || ""; // get email from user context
-  const [verificationStep, setVerificationStep] = useState("email"); // 'email' or 'otp'
+  // Email verification states
+  const userEmail = user?.userdata?.Email || "";
+  const [verificationStep, setVerificationStep] = useState("email");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [timer, setTimer] = useState(0);
   const [canResend, setCanResend] = useState(true);
@@ -49,7 +49,7 @@ export default function MySitesPage() {
   const [verificationSuccess, setVerificationSuccess] = useState("");
   const otpRefs = useRef([]);
 
-  // === Email Verification timer effect ===
+  // Timer effect
   useEffect(() => {
     let interval;
     if (verificationStep === "otp" && timer > 0) {
@@ -67,7 +67,7 @@ export default function MySitesPage() {
     return () => clearInterval(interval);
   }, [verificationStep, timer]);
 
-  // === OTP input handlers ===
+  // OTP handlers
   const handleOTPChange = (index, value) => {
     if (value.length > 1) return;
     if (!/^\d*$/.test(value)) return;
@@ -90,16 +90,13 @@ export default function MySitesPage() {
   const handlePaste = (e) => {
     e.preventDefault();
     const pasteData = e.clipboardData.getData("text").trim();
-    if (!/^\d{6}$/.test(pasteData)) return; // only accept exactly 6 digits
+    if (!/^\d{6}$/.test(pasteData)) return;
 
-    const newOtp = pasteData.split("");
-    setOtp(newOtp);
-
-    // Focus last input after paste
+    setOtp(pasteData.split(""));
     otpRefs.current[5]?.focus();
   };
 
-  // === Send OTP ===
+  // Send OTP
   const handleVerifyEmail = async () => {
     if (!userEmail) return;
     setIsSendingOtp(true);
@@ -132,7 +129,7 @@ export default function MySitesPage() {
     }
   };
 
-  // === Verify OTP ===
+  // Verify OTP
   const handleVerifyOtp = async () => {
     if (otp.join("").length !== 6) {
       setVerificationError("Please enter complete OTP");
@@ -150,8 +147,7 @@ export default function MySitesPage() {
       );
       if (res && res.status === 200) {
         setVerificationSuccess(res.data.message);
-        await refreshUserData(); // update user state
-        // Close modal automatically after success
+        await refreshUserData();
         setTimeout(() => {
           setVerificationStep("email");
           setVerificationSuccess("");
@@ -169,7 +165,7 @@ export default function MySitesPage() {
     }
   };
 
-  // === Resend OTP ===
+  // Resend OTP
   const handleResendOtp = async () => {
     if (!canResend) return;
     setIsSendingOtp(true);
@@ -206,7 +202,7 @@ export default function MySitesPage() {
     }
   };
 
-  // === Back to email step ===
+  // Back to email step
   const handleBackToEmail = () => {
     setVerificationStep("email");
     setVerificationError("");
@@ -216,10 +212,7 @@ export default function MySitesPage() {
     setCanResend(true);
   };
 
-  // === Your existing helpers & fetchSites, handlers, form logic ... (keep them unchanged) ===
-  // formatDateForAPI, formatCreatedAtUTC, fetchSites, pagination, form validation, handleSubmit, etc.
-
-  // formatDateForAPI & formatCreatedAtUTC (unchanged)
+  // Helper functions
   const formatDateForAPI = (date) => {
     if (!date || !(date instanceof Date) || isNaN(date.getTime()))
       return undefined;
@@ -238,8 +231,8 @@ export default function MySitesPage() {
     return `${day}-${month}-${year}`;
   };
 
-  // fetchSites function unchanged but added here for clarity
-  const fetchSites = async () => {
+  // Memoized fetchSites function
+  const fetchSites = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -274,22 +267,23 @@ export default function MySitesPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchSites();
   }, [page, rowsPerPage, searchQuery, date, statusFilter]);
 
-  // status styles and label (unchanged)
+  // Use effect that triggers fetchSites when dependencies change
+  useEffect(() => {
+    fetchSites();
+  }, [fetchSites]);
+
+  // Status styling & label helpers
   const statusStyles = {
     false: "bg-yellow-400 text-yellow-900",
     true: "bg-green-500 text-green-100",
   };
   const statusLabel = (isActive) => (isActive ? "Active" : "Inactive");
 
-  // Pagination Helper to generate pages with ellipsis (unchanged)
+  // Pagination helper
   const getPaginationPages = (currentPage, totalPages) => {
-    const delta = 2; // neighbors around current page
+    const delta = 2;
     const range = [];
     const rangeWithDots = [];
     let l;
@@ -319,7 +313,7 @@ export default function MySitesPage() {
     return rangeWithDots;
   };
 
-  // === Form handlers & validation (unchanged, but renaming errors to formErrors for clarity) ===
+  // Form handlers & validation
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -357,7 +351,7 @@ export default function MySitesPage() {
         setIsAddSiteModalOpen(false);
         setFormData({ WebsiteName: "", WebsiteURL: "", WebAPPUrl: "" });
         setFormErrors({});
-        fetchSites(); // refresh list
+        fetchSites();
       }
     } catch (error) {
       if (error?.response?.status === 409) {
