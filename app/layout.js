@@ -5,7 +5,9 @@ import "../styles/globals.css";
 export const metadata = {
   title: "SwiftAds",
   description: "SwiftAds - The Next Generation of Ads",
-  icon: "/images/icons/swift_ads.png",
+  icons: {
+    icon: "/images/icons/swift_ads.png",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -18,3 +20,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
