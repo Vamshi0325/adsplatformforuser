@@ -3,8 +3,8 @@ import { AuthProvider } from "../context/auth-context";
 import "../styles/globals.css";
 
 export const metadata = {
-  title: "Next.js 15 Auth Dashboard",
-  description: "Dashboard with Sidebar, Header and Auth",
+  title: "SwiftAds",
+  description: "SwiftAds - The Next Generation of Ads",
 };
 
 export default function RootLayout({ children }) {
